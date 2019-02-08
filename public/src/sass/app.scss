@@ -1,0 +1,58 @@
+#calendar {
+    background: #EEEEEE;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 700px;
+    .calendar_header {
+        background: #CCC;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        .prev {
+            flex-basis: 100px;
+            flex-shrink: 0;
+            padding: 10px;
+        }
+        .title {
+            flex-grow: 1;
+            background: red;
+        }
+        .next {
+            flex-basis: 100px;
+            flex-shrink: 0;
+            padding: 10px;
+        }
+    }
+    .calendar_list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 700px;
+        .calendar_cell {
+            flex-basis: 100px;
+            height: 100px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+                background: #DDDDDD;
+            }
+        }
+    }
+    .daylist {
+        display: flex;
+        flex-direction: column;
+        .time {
+            flex-basis: 15px;
+            background: #DDD;
+            &:nth-child(2n) {
+                background: #CCC;
+            }
+            span {
+                font-size: 11px;
+            }
+        }
+    }
+}

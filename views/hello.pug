@@ -1,5 +1,89 @@
 extends app.pug
 
 block main
-    span {{ title }}
-    button-counter(v-bind:title="title2")
+    #calendar        
+        .calendar_header(v-if="calendar.current.month != undefined")
+            .prev
+                button.btn.btn-primary.btn-block prev
+            .title
+                div Помещение 1
+                div {{ calendar.current.day }} {{ month[calendar.current.month][1] }} {{ calendar.current.year }}
+            .next
+                button.btn.btn-primary.btn-block next
+        .calendar_list(v-if="date == null")
+            .calendar_cell(
+                v-for="day in calendar_current_days"
+                v-bind:day="day"
+                v-on:click="useDate(day)") {{ day }}
+        .daylist(v-if="date != null")
+            div.time(
+                v-for="(time, index) in times"
+                v-on:click="setTime(time)")
+                span {{ time }}
+        .modal.fade#exampleModal(
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true")
+            .modal-dialog(role="document")
+                .modal-content
+                    .modal-header
+                        h5.modal-title Modal title
+                        button.close(
+                            type="button"
+                            data-dismiss="modal"
+                            aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    .modal-body
+                        .form-group
+                            label(for="date") Дата
+                            input.form-control#date(
+                                type="text"
+                                aria-describedby="emailHelp"
+                                placeholder="DD.MM.YYYY")
+                        .form-group
+                            label(for="date") Время от
+                            input.form-control#date(
+                                type="text"
+                                aria-describedby="emailHelp"
+                                placeholder="DD.MM.YYYY")
+                        .form-group
+                            label(for="date") Время до
+                            input.form-control#date(
+                                type="text"
+                                aria-describedby="emailHelp"
+                                placeholder="DD.MM.YYYY")
+                        .form-group
+                            label(for="date") Стоимость часа
+                            input.form-control#date(
+                                type="text"
+                                aria-describedby="emailHelp"
+                                placeholder="DD.MM.YYYY")
+                        .form-group
+                            label(for="date") Общая стоимость
+                            input.form-control#date(
+                                type="text"
+                                aria-describedby="emailHelp"
+                                placeholder="DD.MM.YYYY")
+                        h2 Дополнительные услуги
+                        ul
+                            li Освещение
+                            li Освещение
+                            li Освещение
+                    .modal-footer
+                        button.btn.btn-secondary(
+                            type="button"
+                            data-dismiss="modal"
+                        ) Close
+                        button.btn.btn-primary(
+                            type="button"
+                            data-dismiss="modal"
+                        ) Save
+
+    //- calendar(v-bind:days="calendar_current_days")
+    //- pre {{ calendar_current_days }}
+    //- pre {{ calendar }}
+    //- test(
+        v-for="(day, index) in count_days_in_month"
+        v-bind:day="day"
+        :key="index")
