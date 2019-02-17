@@ -1,9 +1,10 @@
 #calendar {
-    background: #EEEEEE;
+    background: green;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     width: 700px;
+    height: 700px;
     .calendar_header {
         background: #CCC;
         display: flex;
@@ -36,23 +37,56 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #DDDDDD;
+            &:nth-child(2n) {
+                background: #EEEEEE;
+            }
             &:hover {
-                background: #DDDDDD;
+                background: #CCCCCC;
             }
         }
     }
     .daylist {
+        position: relative;
         display: flex;
         flex-direction: column;
-        .time {
-            flex-basis: 15px;
-            background: #DDD;
-            &:nth-child(2n) {
-                background: #CCC;
-            }
-            span {
-                font-size: 11px;
+        flex-grow: 1;
+        .times {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            .time {
+                flex-grow: 1;
+                // flex-basis: 30px;
+                background: #DDD;
+                cursor: pointer;
+                
+                &:nth-child(2n) {
+                    background: #CCC;
+                }
+                &:hover {
+                    background: #EEE;
+                }
+                span {
+                    font-size: 11px;
+                }
             }
         }
+        .entrys {
+            .entry {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background: red;
+                overflow: hidden;
+            }
+        }
+    }
+    .order {
+        background: white;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 }

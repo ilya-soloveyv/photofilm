@@ -1,9 +1,10 @@
 #calendar {
-  background: #EEEEEE;
+  background: green;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  width: 700px; }
+  width: 700px;
+  height: 700px; }
   #calendar .calendar_header {
     background: #CCC;
     display: flex;
@@ -31,16 +32,40 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center; }
+      justify-content: center;
+      background: #DDDDDD; }
+      #calendar .calendar_list .calendar_cell:nth-child(2n) {
+        background: #EEEEEE; }
       #calendar .calendar_list .calendar_cell:hover {
-        background: #DDDDDD; }
+        background: #CCCCCC; }
   #calendar .daylist {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; }
+    #calendar .daylist .times {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; }
+      #calendar .daylist .times .time {
+        flex-grow: 1;
+        background: #DDD;
+        cursor: pointer; }
+        #calendar .daylist .times .time:nth-child(2n) {
+          background: #CCC; }
+        #calendar .daylist .times .time:hover {
+          background: #EEE; }
+        #calendar .daylist .times .time span {
+          font-size: 11px; }
+    #calendar .daylist .entrys .entry {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: red;
+      overflow: hidden; }
+  #calendar .order {
+    background: white;
+    flex-grow: 1;
     display: flex;
     flex-direction: column; }
-    #calendar .daylist .time {
-      flex-basis: 15px;
-      background: #DDD; }
-      #calendar .daylist .time:nth-child(2n) {
-        background: #CCC; }
-      #calendar .daylist .time span {
-        font-size: 11px; }
