@@ -35,6 +35,8 @@ var Entry = connection.define('entry', {
     tEntryTimeTo: Sequelize.TIME,
 })
 
+connection.sync()
+
 // connection.sync().then(function(){
     // Entry.create({
     //     iObjectID: 1,
