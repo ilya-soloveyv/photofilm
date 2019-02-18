@@ -82,7 +82,6 @@ if (process.env.NODE_ENV == 'development') {
     }
 
     https.createServer(options, (req, res) => {
-        res.writeHead(200);
-        res.end('hello world\n');
+        console.log('Server 443 is running...')
     }).listen(443)
 }
