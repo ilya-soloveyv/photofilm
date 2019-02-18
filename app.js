@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const fs = require('fs')
 const pug = require('pug')
 app.set('view engine', 'pug');
 require('dotenv').config()
