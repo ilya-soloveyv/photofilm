@@ -53,7 +53,7 @@ gulp.task('js_min', () => {
 gulp.task('css_min', () => {
     return gulp
         .src([
-			'node_modules/bootstrap/dist/css/bootstrap.min.css',
+			'node_modules/bootstrap/dist/css/bootstrap.css',
             'public/src/css/app.css'
         ], { allowEmpty: true })
         .pipe(concat('app.min.css'))
