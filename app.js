@@ -81,7 +81,6 @@ if (process.env.NODE_ENV == 'development') {
         cert: fs.readFileSync('encryption/cert1.pem')
     }
 
-    https.createServer(options, (req, res) => {
-        console.log('Server 443 is running...')
-    }).listen(443)
+    const https = require('https').createServer(options, app)
+    https.listen(443)
 }
