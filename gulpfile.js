@@ -45,7 +45,6 @@ gulp.task('js_min', () => {
         .pipe(gulp.dest('public/build/'))
         .on('end', () => {
             del.sync([
-				'node_modules/bootstrap/dist/css/bootstrap.min.css',
                 'public/build/app.js',
             ]);
         })
@@ -53,7 +52,8 @@ gulp.task('js_min', () => {
 
 gulp.task('css_min', () => {
     return gulp
-        .src([            
+        .src([
+			'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'public/src/css/app.css'
         ], { allowEmpty: true })
         .pipe(concat('app.min.css'))
