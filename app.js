@@ -73,14 +73,10 @@ if (process.env.NODE_ENV == 'development') {
         console.log('Server is running...')
     })
 } else {
-    const https = require('https');
-    const fs = require('fs');
-
     const options = {
         key: fs.readFileSync('encryption/privkey1.pem'),
         cert: fs.readFileSync('encryption/cert1.pem')
     }
-
     const https = require('https').createServer(options, app)
     https.listen(443)
 }
