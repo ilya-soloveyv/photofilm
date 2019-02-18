@@ -33,38 +33,6 @@ var Entry = connection.define('entry', {
 
 connection.sync()
 
-// connection.sync().then(function(){
-    // Entry.create({
-    //     iObjectID: 1,
-    //     dEntryDate: '2019-02-18',
-    //     tEntryTimeFrom: '14:00:00',
-    //     tEntryTimeTo: '18:00:00'
-    // })
-// })
-// connection.sync().then(function(){
-    // Entry.findById(2).then(function (entry) {
-    //     console.log(entry.dataValues)
-    // })
-// })
-
-
-
-// sequelize.sync().then(() => Entry.findAll()).then(entries => {
-//     console.log(entries);
-// })
-
-
-// var models = require('./models');
-// var Empty = models.Empty;
-// var empty = Empty.build({ iObjectID: 1 });
-// const Entry = require('./models/entry.model')
-
-// Entry.findAll().then(entries => {
-//     console.log(entries)
-// })
-
-
-
 app.get('/', (req, res) => {
     res.sendStatus(503)
 })
@@ -82,18 +50,7 @@ app.post('/get', async (req, res) => {
     }).then(function (entry) {
         res.json(entry)
     })
-    // data.body = req.body
-    // data.entry = await Entry.getEntrys({ dEntryDate: req.body.dEntryDate})
-    // data.entry = await Entry.getEntrys({ iObjectID: req.body.iObjectID, dEntryDate: req.body.dEntryDate })
-    
 })
-
-
-
-
-// var time = new Date(0, 0, 0, req.body.dEntryTimeFrom)
-// console.log(time)
-
 
 app.post('/set', async (req, res) => {
     var from = new Date(req.body.dEntryDate + " " + req.body.tEntryTimeFrom)
@@ -109,46 +66,23 @@ app.post('/set', async (req, res) => {
     }).then(function () {
         res.json(true)
     })
-
-    
-
-
-    // await Entry.setEntry([ req.body.iObjectID, dEntryDate, dEntryTimeFrom, dEntryTimeTo])
-
-
-    // const Entry = sequelize.define('entry', {
-    //     iEntryID: Sequelize.INTEGER,
-    //     iObjectID: Sequelize.INTEGER,
-    //     dEntryDate: Sequelize.DATE,
-    //     dEntryTimeFrom: Sequelize.TIME,
-    //     dEntryTimeTo: Sequelize.TIME
-    // })
-
-    // sequelize.sync().then(() => Entry2.create({
-    //     iObjectID: 1,
-    //     dEntryDate: '2019-02-17',
-    //     dEntryTimeFrom: '12:00:00',
-    //     dEntryTimeTo: '13:00:00',
-    // })).then(jane => {
-    //     console.log(jane.toJSON());
-    // });
-
-
-    // var d = new Date(0, 0, 0, 6, 0, 0)
-
-
-    // var d = new Date(0, 0, 0, 14, 0, 0)
-    // var jun = moment(d).tz('Europe/Moscow');
-    // console.log(jun)
-    
-    
-    // var dEntryTimeTo = new Date(req.body.dEntryTimeFrom)
-    //     dEntryTimeTo.setHour(dEntryTimeTo.getHour()+1)
-    // console.log(dEntryTimeTo)
-    // await Entry.getEntrys({ iObjectID: req.body.iObjectID, dEntryDate: req.body.dEntryDate })
-    
 })
 
-app.listen(process.env.PORT, () => {
-    console.log('Server is running...')
-})
+if (process.env.NODE_ENV != 'development') {
+    app.listen(process.env.PORT, () => {
+        console.log('Server is running...')
+    })
+} else {
+    const https = require('https');
+    const fs = require('fs');
+
+    const options = {
+        key: fs.readFileSync('encryption/privkey1.pem'),
+        cert: fs.readFileSync('encryption/cert1.pem')
+    }
+
+    https.createServer(options, (req, res) => {
+        res.writeHead(200);
+        res.end('hello world\n');
+    }).listen(443)
+}
