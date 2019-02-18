@@ -68,7 +68,7 @@ app.post('/set', async (req, res) => {
     })
 })
 
-if (process.env.NODE_ENV != 'development') {
+if (process.env.NODE_ENV == 'development') {
     app.listen(process.env.PORT, () => {
         console.log('Server is running...')
     })
