@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const pug = require('pug')
 app.set('view engine', 'pug');
-const config = require('config')
 require('dotenv').config()
 app.use(express.static('public'));
 app.locals.env = process.env;
@@ -12,15 +11,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 const moment = require('moment')
 
+app.use('/axios', express.static(__dirname + '/node_modules/axios/dist'))
+app.use('/vue', express.static(__dirname + '/node_modules/vue/dist'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'))
-app.use('/vue', express.static(__dirname + '/node_modules/vue/dist'))
-app.use('/axios', express.static(__dirname + '/node_modules/axios/dist'))
 
 var data = {}
-
-
-console.log(process.env.PORT)
 
 const Sequelize = require('sequelize')
 const connection = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {

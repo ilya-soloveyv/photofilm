@@ -33,8 +33,8 @@ gulp.task('js_min', () => {
 			'node_modules/axios/dist/axios.min.js',
 			'node_modules/vue/dist/vue.min.js',
 			'node_modules/jquery/dist/jquery.min.js',
-			'node_modules/bootstrap/dist/bootstrap.min.js',
-            'public/src/js/public/app.js'
+			'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'public/src/js/app.js'
         ], { allowEmpty: true })
         .pipe(concat('app.js'))
         .pipe(minify_js({
@@ -45,42 +45,43 @@ gulp.task('js_min', () => {
         .pipe(gulp.dest('public/build/'))
         .on('end', () => {
             del.sync([
+				'node_modules/bootstrap/dist/css/bootstrap.min.css',
                 'public/build/app.js',
             ]);
         })
 })
 
-// gulp.task('css_min', () => {
-//     return gulp
-//         .src([            
-//             'public/src/css/public/app.css'            
-//         ], { allowEmpty: true })
-//         .pipe(concat('app.min.css'))
-//         .pipe(cleanCSS())
-//         .pipe(gulp.dest('public/'))
-// })
+gulp.task('css_min', () => {
+    return gulp
+        .src([            
+            'public/src/css/app.css'
+        ], { allowEmpty: true })
+        .pipe(concat('app.min.css'))
+        .pipe(cleanCSS())
+        .pipe(gulp.dest('public/build/'))
+})
 
-// gulp.task('rev', () => {
-//     return gulp.src(['public/app.min.css', 'public/app.min.js'])
-//         .pipe(rev())
-//         .pipe(gulp.dest('public/'))
-//         .pipe(rev.manifest())
-//         .pipe(gulp.dest('public/manifest/'))
-// })
+gulp.task('rev', () => {
+    return gulp.src(['public/build/app.min.css', 'public/build/app.min.js'])
+        .pipe(rev())
+        .pipe(gulp.dest('public/build/'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('public/manifest/'))
+})
 
-// gulp.task('rev_collector', () => {
-//     return gulp.src(['public/manifest/**/*.json', 'views/public/app.pug'])
-//         .pipe( revCollector({
-//             replaceReved: true
-//         }))
-//         .pipe( gulp.dest('views/public/') )
-// })
+gulp.task('rev_collector', () => {
+    return gulp.src(['public/manifest/**/*.json', 'views/app.pug'])
+        .pipe( revCollector({
+            replaceReved: true
+        }))
+        .pipe( gulp.dest('views/') )
+})
 
-// gulp.task('rev_clean', function() {
-//     return gulp.src( ['public/*.*'], {read: false})
-//         .pipe( revOutdated(1) )
-//         .pipe( cleaner() )
-// });
+gulp.task('rev_clean', function() {
+    return gulp.src( ['public/build/*.*'], {read: false})
+        .pipe( revOutdated(1) )
+        .pipe( cleaner() )
+});
 
 
 
@@ -122,5 +123,5 @@ gulp.task('nodemon', function (cb) {
 			cb();
 			started = true; 
 		} 
-	});
-});
+	})
+})
