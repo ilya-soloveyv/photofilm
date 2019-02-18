@@ -69,11 +69,7 @@ app.post('/set', async (req, res) => {
     })
 })
 
-if (process.env.NODE_ENV == 'development') {
-    app.listen(process.env.PORT, () => {
-        console.log('Server is running...')
-    })
-} else {
+if (process.env.NODE_ENV != 'development') {
     const options = {
         key: fs.readFileSync('encryption/privkey1.pem'),
         cert: fs.readFileSync('encryption/cert1.pem')
@@ -81,3 +77,6 @@ if (process.env.NODE_ENV == 'development') {
     const https = require('https').createServer(options, app)
     https.listen(443)
 }
+app.listen(process.env.PORT, () => {
+    console.log('Server is running...')
+})
