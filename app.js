@@ -17,6 +17,24 @@ app.use('/vue', express.static(__dirname + '/node_modules/vue/dist'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'))
 
+if (process.env.NODE_ENV != 'development') {
+    app.use(function(req, res, next) {
+        if (req.secure) {
+            next()
+        } else {
+            res.redirect(301, 'https://' + req.headers.host + req.url)
+        }
+    })
+}
+
+app.all('*', (req, res, next) => {
+    if (req.headers.host.match(/^www/) !== null ) {
+        res.redirect(301, 'https://' + req.headers.host.replace(/^www\./, '') + req.url)
+    } else {
+        next()
+    }
+})
+
 var data = {}
 
 const Sequelize = require('sequelize')
