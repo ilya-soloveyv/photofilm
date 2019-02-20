@@ -32,7 +32,7 @@ gulp.task('js_min', () => {
         .src([
 			'node_modules/axios/dist/axios.min.js',
             'node_modules/vue/dist/vue.min.js',
-            'node_modules/vue-router/vue-router.min.js',
+            'node_modules/vue-router/dist/vue-router.min.js',
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/bootstrap/dist/js/bootstrap.min.js',
             'public/src/js/app.js'
