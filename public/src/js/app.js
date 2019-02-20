@@ -71,23 +71,28 @@ var vm = new Vue({
         objects: [
             {
                 id: 1,
-                title: 'Помещение 1'
+                title: 'Зал White',
+                price: 1200
             },
             {
                 id: 2,
-                title: 'Помещение 2'
+                title: 'Зал Black',
+                price: 900
             },
             {
                 id: 3,
-                title: 'Помещение 3'
+                title: 'Зал Max',
+                price: 900
             },
             {
                 id: 4,
-                title: 'Помещение 4'
+                title: 'Зал Wood',
+                price: 900
             },
             {
                 id: 5,
-                title: 'Помещение 5'
+                title: 'Зал Red',
+                price: 600
             },
         ],
         current_object: 1,
@@ -172,7 +177,7 @@ var vm = new Vue({
             if (vm.date && vm.current_object) {
                 axios.post('/get', {
                     dEntryDate: new Date(vm.date).toYMD(),
-                    iObjectID: vm.current_object
+                    iPlaceID: vm.current_object
                 })
                 .then(function (response) {
                     // console.log(response.data)
@@ -198,7 +203,7 @@ var vm = new Vue({
         },
         orderTime: function () {
             axios.post('/set', {
-                iObjectID: this.current_object,
+                iPlaceID: this.current_object,
                 dEntryDate: this.dateString,
                 tEntryTimeFrom: this.time,
                 orderHoutSelect: this.orderHoutSelect

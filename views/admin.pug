@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Booking
+        if env.NODE_ENV == 'development'
+            link(rel="stylesheet", href="/bootstrap/css/bootstrap.min.css")
+            link(rel="stylesheet", href="/src/css/app.css")
+        else
+            link(rel="stylesheet", href="/build/app.min.css")
+    body
+        #app
+            nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+                router-link.navbar-brand(to="/") Booking CRM
+                button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+                    span.navbar-toggler-icon
+                #navbarSupportedContent.collapse.navbar-collapse
+                    ul.navbar-nav.mr-auto
+                        li.nav-item(v-for="(menu, index) in menu")
+                            router-link.nav-link(v-bind:to="menu.uri") {{ menu.title }}
+            .container-fluid
+                router-view
+        if env.NODE_ENV == 'development'
+            script(src='/axios/axios.js')
+            script(src='/vue/vue.js')
+            script(src='/vue-router/vue-router.js')
+            script(src='/jquery/jquery.min.js')
+            script(src='/bootstrap/js/bootstrap.min.js')
+            script(src='/src/js/admin.js')
+        else
+            script(src='/build/app.min.js')

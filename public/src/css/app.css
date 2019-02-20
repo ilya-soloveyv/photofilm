@@ -1,22 +1,35 @@
+body {
+  background: grey; }
+
 #calendar {
-  background: green;
+  background: white;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   width: 700px;
   height: 700px; }
+  @media (max-width: 800px) {
+    #calendar {
+      width: 500px; } }
   #calendar .calendar_header {
     background: #CCC;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap; }
+    flex-wrap: nowrap;
+    text-align: center;
+    padding: 10px; }
     #calendar .calendar_header .prev {
       flex-basis: 100px;
       flex-shrink: 0;
       padding: 10px; }
     #calendar .calendar_header .title {
       flex-grow: 1;
-      background: red; }
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap; }
+      #calendar .calendar_header .title .name {
+        font-size: 18px;
+        font-weight: bold; }
     #calendar .calendar_header .next {
       flex-basis: 100px;
       flex-shrink: 0;

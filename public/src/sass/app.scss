@@ -1,15 +1,23 @@
+body {
+    background: grey;
+}
 #calendar {
-    background: green;
+    background: white;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     width: 700px;
     height: 700px;
+    @media (max-width: 800px) {
+        width: 500px;
+    }
     .calendar_header {
         background: #CCC;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
+        text-align: center;
+        padding: 10px;
         .prev {
             flex-basis: 100px;
             flex-shrink: 0;
@@ -17,7 +25,17 @@
         }
         .title {
             flex-grow: 1;
-            background: red;
+            // background: red;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            .selectMonth {
+
+            }
+            .name {
+                font-size: 18px;
+                font-weight: bold;
+            }
         }
         .next {
             flex-basis: 100px;
