@@ -12,11 +12,13 @@ html(lang="en")
             link(rel="stylesheet", href="/build/app-84aa81cdc3.min.css")
     body
         #app
+            router-view
             block main
 
         if env.NODE_ENV == 'development'
             script(src='/axios/axios.js')
             script(src='/vue/vue.js')
+            script(src='/vue-router/vue-router.js')
             script(src='/jquery/jquery.min.js')
             script(src='/bootstrap/js/bootstrap.min.js')
             script(src='/src/js/app.js')
