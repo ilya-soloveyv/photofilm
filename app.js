@@ -14,6 +14,7 @@ const moment = require('moment')
 
 app.use('/axios', express.static(__dirname + '/node_modules/axios/dist'))
 app.use('/vue', express.static(__dirname + '/node_modules/vue/dist'))
+app.use('/vue-router', express.static(__dirname + '/node_modules/vue-router/dist'))
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'))
 
@@ -43,12 +44,56 @@ const connection = new Sequelize(process.env.DATABASE, process.env.USER, process
     "operatorsAliases": false
 })
 
+var Place = connection.define('place', {
+    iPlaceID: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    sPlaceTitle: Sequelize.STRING,
+    createdAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
+    },
+    updatedAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
+    }
+})
+
 var Entry = connection.define('entry', {
-    iObjectID: Sequelize.INTEGER,
+    iEntryID: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    iPlaceID: Sequelize.INTEGER,
     dEntryDate: Sequelize.DATEONLY,
     tEntryTimeFrom: Sequelize.TIME,
     tEntryTimeTo: Sequelize.TIME,
 })
+
+var Holiday = connection.define('holiday', {
+    iHolidayID: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    dHolidayDate: Sequelize.DATEONLY
+})
+
+
+// var Price = connection.define('price', {
+//     iPriceID: {
+//         type: Sequelize.INTEGER,
+//         primaryKey: true,
+//         autoIncrement: true
+//     },
+//     iPlaceID: Sequelize.INTEGER,
+//     sPriceCost: Sequelize.INTEGER
+// })
 
 connection.sync()
 
@@ -63,7 +108,7 @@ app.get('/booking', (req, res) => {
 app.post('/get', async (req, res) => {
     Entry.findAll({
         where: {
-            iObjectID: req.body.iObjectID,
+            iPlaceID: req.body.iPlaceID,
             dEntryDate: req.body.dEntryDate
         }        
     }).then(function (entry) {
@@ -78,7 +123,7 @@ app.post('/set', async (req, res) => {
     var tEntryTimeTo = moment(from).add(req.body.orderHoutSelect, 'hours').format('HH:mm:ss')
 
     Entry.create({
-        iObjectID: req.body.iObjectID,
+        iPlaceID: req.body.iPlaceID,
         dEntryDate: dEntryDate,
         tEntryTimeFrom: tEntryTimeFrom,
         tEntryTimeTo: tEntryTimeTo
@@ -86,6 +131,44 @@ app.post('/set', async (req, res) => {
         res.json(true)
     })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/admin', async (req, res) => {
+    res.render('admin')
+})
+app.post('/admin/PlaceList', async (req, res) => {
+    Place.findAll().then(function (data) {
+        res.json(data)
+    })
+})
+app.post('/admin/PlaceView', async (req, res) => {
+    Place.findById(req.body.iPlaceID).then(function (data) {
+        res.json(data)
+    })
+})
+
+
+
+
+
+
+
+
+
+
 
 if (process.env.NODE_ENV != 'development') {
     const options = {

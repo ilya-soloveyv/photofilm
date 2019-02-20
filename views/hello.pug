@@ -4,25 +4,25 @@ block main
     #calendar
         .calendar_header(v-if="date == null && time == null")
             .prev
-                button.btn.btn-primary.btn-block(v-on:click="prevMonth()") prev
+                button.btn.btn-primary.btn-block(v-on:click="prevMonth()") Назад
             .title
-                div(v-if="current_object")
+                div.selectMonth(v-if="current_object")
                     select(v-model="current_object")
                         option(v-for="(object, index) in objects" v-bind:value="object.id") {{ object.title }}
-                div {{ month_name }} {{ year }}
+                div.name {{ month_name }} {{ year }}
             .next
-                button.btn.btn-primary.btn-block(v-on:click="nextMonth()") next
+                button.btn.btn-primary.btn-block(v-on:click="nextMonth()") Вперед
         .calendar_header(v-if="date != null && time == null")
             .prev
-                button.btn.btn-primary.btn-block(v-on:click="prevDay()") prev
+                button.btn.btn-primary.btn-block(v-on:click="prevDay()") Назад
             .title
-                div(v-if="current_object")
+                div.selectMonth(v-if="current_object")
                     select(v-model="current_object")
                         option(v-for="(object, index) in objects" v-bind:value="object.id") {{ object.title }}
-                div {{ currentDate }}
+                div.name {{ currentDate }}
                     a(href="#" v-on:click.prevent="clearDate") Вернуться к выбору даты
             .next
-                button.btn.btn-primary.btn-block(v-on:click="nextDay()") next
+                button.btn.btn-primary.btn-block(v-on:click="nextDay()") Вперед
         .calendar_list(v-if="date == null")
             .calendar_cell(
                 v-for="day in count_month_days"
@@ -35,11 +35,11 @@ block main
                     v-bind:data-date="time"
                     v-on:click="setTime(time)")
                     span {{ time }}
-            .entrys
+            .entrys(v-if="entry.length")
                 .entry(
                     v-for="(item, index) in entry"
                     v-bind:data-from="item.tEntryTimeFrom"
-                    v-bind:data-to="item.tEntryTimeTo") {{ item }}
+                    v-bind:data-to="item.tEntryTimeTo") Забронировано
         .order(v-if="date != null && time != null")
             .orderform
                 h3 Оформление
@@ -65,9 +65,15 @@ block main
                     
                 .form-group
                     label Стоимость часа
-                    input.form-control(type="text")
+                    input.form-control(
+                        type="text"
+                        v-bind:value="objects[current_object].price"
+                        disabled)
                 .form-group
                     label Общая стоимость
-                    input.form-control(type="text")
+                    input.form-control(
+                        type="text"
+                        v-bind:value="objects[current_object].price*orderHoutSelect"
+                        disabled)
                 button.btn.btn-primary(
                     v-on:click="orderTime") Оформить

@@ -102,17 +102,17 @@ gulp.task('watch', () => {
     gulp.watch('public/src/sass/**/*.scss', gulp.series('sass'))
 })
 
-// gulp.task('bs', function() {
-// 	browserSync.init(null, {
-// 		proxy: "http://localhost:3000",
-//         files: [
-//             'views/**/*.*',
-//             'public/src/css/**/*.*',
-//             'public/src/js/**/*.*'
-//         ],
-//         port: 7000
-// 	});
-// });
+gulp.task('bs', function() {
+	browserSync.init(null, {
+		proxy: "http://localhost:3000",
+        files: [
+            'views/**/*.*',
+            'public/src/css/**/*.*',
+            'public/src/js/**/*.*'
+        ],
+        port: 7000
+	});
+});
 
 gulp.task('nodemon', function (cb) {
 	var started = false;
