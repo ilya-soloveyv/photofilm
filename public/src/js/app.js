@@ -15,8 +15,46 @@
     }
 })();
 
+const Order = {
+    template: `<div>Order</div>`
+}
+const Place = {
+    template: `<router-view></router-view>`
+}
+const PlaceList = {
+    template: `<div>PlaceList</div>`
+}
+const PlaceView = {
+    template: `<div>PlaceView</div>`
+}
+
+const routes = [
+    {
+        path: '/order',
+        component: Order
+    },
+    {
+        path: '/place/',
+        component: Place,
+        children: [
+            {
+                path: '',
+                component: PlaceList
+            },
+            {
+                path: ':id',
+                component: PlaceView,
+                props: true
+            }
+        ]
+    }
+]
+const router = new VueRouter({
+    routes
+})
+
 var vm = new Vue({
-    el: '#app',
+    router,
     data: {
         current_date: new Date(),
         // current_date: new Date(2019, 0, 31),
@@ -95,7 +133,6 @@ var vm = new Vue({
                 price: 600
             },
         ],
-        current_object: 1,
         orderHour: [
             {
                 title: "Один час",
@@ -118,10 +155,15 @@ var vm = new Vue({
                 value: 5
             },
         ],
-        orderHoutSelect: 1
+        orderHoutSelect: 1,
+        iPlaceID: null,
+        iUserID: null
     },
     created: function () {
-
+        var iPlaceID = (this.$route.query.iPlaceID) ? Number(this.$route.query.iPlaceID) : null
+        var iUserID = (this.$route.query.iUserID) ? Number(this.$route.query.iUserID) : null
+        Vue.set(this, 'iPlaceID', iPlaceID)
+        Vue.set(this, 'iUserID', iUserID)
     },
     mounted: function () {
 
@@ -174,10 +216,10 @@ var vm = new Vue({
             this.getEntry()
         },
         getEntry: function () {
-            if (vm.date && vm.current_object) {
+            if (vm.date && vm.iPlaceID) {
                 axios.post('/get', {
                     dEntryDate: new Date(vm.date).toYMD(),
-                    iPlaceID: vm.current_object
+                    iPlaceID: vm.iPlaceID
                 })
                 .then(function (response) {
                     // console.log(response.data)
@@ -203,7 +245,7 @@ var vm = new Vue({
         },
         orderTime: function () {
             axios.post('/set', {
-                iPlaceID: this.current_object,
+                iPlaceID: this.iPlaceID,
                 dEntryDate: this.dateString,
                 tEntryTimeFrom: this.time,
                 orderHoutSelect: this.orderHoutSelect
@@ -217,7 +259,7 @@ var vm = new Vue({
         }
     },
     watch: {
-        current_object: function () {
+        iPlaceID: function () {
             this.getEntry()
         }
     },
@@ -244,4 +286,4 @@ var vm = new Vue({
             return new Date(vm.date).toYMD()
         }
     }
-})
+}).$mount('#app')

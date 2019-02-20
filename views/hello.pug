@@ -6,8 +6,8 @@ block main
             .prev
                 button.btn.btn-primary.btn-block(v-on:click="prevMonth()") Назад
             .title
-                div.selectMonth(v-if="current_object")
-                    select(v-model="current_object")
+                div.selectMonth(v-if="iPlaceID")
+                    select(v-model="iPlaceID")
                         option(v-for="(object, index) in objects" v-bind:value="object.id") {{ object.title }}
                 div.name {{ month_name }} {{ year }}
             .next
@@ -16,8 +16,8 @@ block main
             .prev
                 button.btn.btn-primary.btn-block(v-on:click="prevDay()") Назад
             .title
-                div.selectMonth(v-if="current_object")
-                    select(v-model="current_object")
+                div.selectMonth(v-if="iPlaceID")
+                    select(v-model="iPlaceID")
                         option(v-for="(object, index) in objects" v-bind:value="object.id") {{ object.title }}
                 div.name {{ currentDate }}
                     a(href="#" v-on:click.prevent="clearDate") Вернуться к выбору даты
@@ -67,13 +67,13 @@ block main
                     label Стоимость часа
                     input.form-control(
                         type="text"
-                        v-bind:value="objects[current_object].price"
+                        v-bind:value="objects[iPlaceID].price"
                         disabled)
                 .form-group
                     label Общая стоимость
                     input.form-control(
                         type="text"
-                        v-bind:value="objects[current_object].price*orderHoutSelect"
+                        v-bind:value="objects[iPlaceID].price*orderHoutSelect"
                         disabled)
                 button.btn.btn-primary(
                     v-on:click="orderTime") Оформить

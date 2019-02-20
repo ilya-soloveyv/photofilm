@@ -95,7 +95,7 @@ var Holiday = connection.define('holiday', {
 //     sPriceCost: Sequelize.INTEGER
 // })
 
-connection.sync()
+// connection.sync()
 
 app.get('/', (req, res) => {
     res.sendStatus(503)
